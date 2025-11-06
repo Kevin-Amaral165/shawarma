@@ -1,11 +1,11 @@
-import { Input as AntdInput, InputProps } from 'antd';
+import { Input as AntdInput } from 'antd';
 import styled from 'styled-components';
 
 const StyledInput = styled(AntdInput)`
   border-radius: 8px;
 `;
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC = (props) => {
   return <StyledInput {...props} />;
 };
 
