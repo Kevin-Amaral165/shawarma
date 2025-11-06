@@ -1,7 +1,6 @@
-import { InputProps } from 'antd';
 import { StyledInput } from './styles';
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC = (props) => {
   return <StyledInput {...props} />;
 };
 
