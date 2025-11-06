@@ -1,4 +1,4 @@
-import { Button as AntdButton, ButtonProps } from 'antd';
+import { Button as AntdButton } from 'antd';
 import styled from 'styled-components';
 
 const StyledButton = styled(AntdButton)`
@@ -12,7 +12,7 @@ const StyledButton = styled(AntdButton)`
   }
 `;
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button: React.FC = (props) => {
   return <StyledButton {...props} />;
 };
 
