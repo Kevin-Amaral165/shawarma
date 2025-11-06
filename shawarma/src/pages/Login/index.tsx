@@ -1,40 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import { useNavigate, Link } from 'react-router-dom';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { LoginPageContainer, LoginForm, Title, RegisterLink } from './styles';
 
 interface LoginProps {
   setUserRole: (role: string) => void;
 }
-
-const LoginPageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to bottom, #ff4b2b, #ff416c);
-`;
-
-const LoginForm = styled.form`
-  padding: 40px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  width: 300px;
-`;
-
-const Title = styled.h2`
-  margin-bottom: 20px;
-  color: #333;
-  text-align: center;
-`;
 
 const Login: React.FC<LoginProps> = ({ setUserRole }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // Admin credentials: admin / adminpass
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -81,6 +60,9 @@ const Login: React.FC<LoginProps> = ({ setUserRole }) => {
         <Button type="primary" htmlType="submit" block>
           Login
         </Button>
+        <RegisterLink>
+          Don't have an account? <Link to="/register">Register</Link>
+        </RegisterLink>
       </LoginForm>
     </LoginPageContainer>
   );
