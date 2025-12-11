@@ -1,62 +1,70 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import { RegisterPageContainer, RegisterForm, Title } from './styles';
+import React from 'react';
+import { Form, Input, Button, message } from 'antd';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
-const RegisterPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+const RegisterPage: React.FC = () => {
+    const history = useHistory();
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const onFinish = (values: any) => {
+        axios.post('/api/register', values)
+            .then(response => {
+                message.success('Registration successful!');
+                history.push('/login');
+            })
+            .catch(error => {
+                console.error('Error registering:', error);
+                message.error('Registration failed.');
+            });
+    };
 
-    try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate('/login');
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Registration failed:', error);
-      alert('Registration failed. Please try again.');
-    }
-  };
-
-  return (
-    <RegisterPageContainer>
-      <RegisterForm onSubmit={handleRegister}>
-        <Title>Register</Title>
-        <Input
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{ marginBottom: '15px' }}
-        />
-        <Input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ marginBottom: '20px' }}
-        />
-        <Button type="primary" htmlType="submit" block>
-          Register
-        </Button>
-      </RegisterForm>
-    </RegisterPageContainer>
-  );
+    return (
+        <div style={{ maxWidth: '400px', margin: 'auto', paddingTop: '50px' }}>
+            <h2>Register</h2>
+            <Form
+                name="register"
+                onFinish={onFinish}
+                scrollToFirstError
+            >
+                <Form.Item
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
+                >
+                    <Input placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    hasFeedback
+                >
+                    <Input.Password placeholder="Password" />
+                </Form.Item>
+                <Form.Item
+                    name="confirm"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                        { required: true, message: 'Please confirm your password!' },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password placeholder="Confirm Password" />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Register
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+    );
 };
 
 export default RegisterPage;
