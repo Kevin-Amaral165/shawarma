@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Row, Col, Typography, message, Spin, Alert } from 'antd';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
+import { CartContainer } from './styles';
 
 const { Title } = Typography;
 
@@ -21,6 +23,7 @@ const OrderPage: React.FC = () => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const { user } = useAuth();
 
     useEffect(() => {
         const fetchMenuItems = async () => {
@@ -56,9 +59,14 @@ const OrderPage: React.FC = () => {
     };
 
     const placeOrder = async () => {
+        if (!user) {
+            message.error('You must be logged in to place an order.');
+            return;
+        }
+
         try {
             const orderData = {
-                user_id: 1,
+                user_id: user.id,
                 items: cart.map(item => ({ id: item.id, quantity: item.quantity }))
             };
             await axios.post('/api/orders', orderData);
@@ -81,7 +89,6 @@ const OrderPage: React.FC = () => {
     return (
         <div style={{ padding: '20px' }}>
             <Title>Menu</Title>
-            <pre>{JSON.stringify(menuItems, null, 2)}</pre>
             <Row gutter={[16, 16]}>
                 {menuItems.map((item) => (
                     <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
@@ -104,7 +111,7 @@ const OrderPage: React.FC = () => {
                     </Col>
                 ))}
             </Row>
-            <div style={{ position: 'fixed', bottom: '20px', right: '20px', background: 'white', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}>
+            <CartContainer>
                 <Title level={4}>Cart</Title>
                 {cart.length === 0 ? (
                     <p>Your cart is empty.</p>
@@ -125,7 +132,7 @@ const OrderPage: React.FC = () => {
                         </Button>
                     </>
                 )}
-            </div>
+            </CartContainer>
         </div>
     );
 };

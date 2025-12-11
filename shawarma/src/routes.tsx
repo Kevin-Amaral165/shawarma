@@ -1,32 +1,29 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import NavBar from './components/NavBar';
 import RegisterPage from './pages/RegisterPage';
-import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import OrderPage from './pages/OrderPage';
+import AdminDashboard from './pages/AdminDashboard';
+import { useAuth } from './context/AuthContext';
 
 const AppRoutes = () => {
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const { user } = useAuth();
 
   return (
     <Router>
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login setUserRole={setUserRole} />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/order" element={<OrderPage />} />
         <Route
-          path="/dashboard"
-          element={userRole ? <Dashboard role={userRole} /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/admin"
+          path="/admin/dashboard"
           element={
-            <ProtectedRoute userRole={userRole}>
-              <AdminPage />
+            <ProtectedRoute userRole={user?.role}>
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />
