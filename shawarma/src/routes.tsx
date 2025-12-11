@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import HomePage from './pages/HomePage';
 import NavBar from './components/NavBar';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -15,10 +14,9 @@ const AppRoutes = () => {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<OrderPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/order" element={<OrderPage />} />
         <Route
           path="/admin/dashboard"
           element={

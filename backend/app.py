@@ -5,10 +5,11 @@ from backend.models.order import Order
 from backend.controllers.auth_controller import login, register
 from backend.controllers.menu_item_controller import get_menu_items
 from backend.controllers.order_controller import create_order, get_orders
+import os
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///../instance/users.db')
 db.init_app(app)
 
 with app.app_context():

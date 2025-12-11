@@ -88,6 +88,11 @@ const OrderPage: React.FC = () => {
 
     return (
         <div style={{ padding: '20px' }}>
+            <div style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc', borderRadius: '8px' }}>
+                <Title level={4}>Admin Credentials</Title>
+                <p>Username: admin</p>
+                <p>Password: admin_password</p>
+            </div>
             <Title>Menu</Title>
             <Row gutter={[16, 16]}>
                 {menuItems.map((item) => (
