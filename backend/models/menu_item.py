@@ -1,4 +1,4 @@
-from backend.models.user import db
+from .user import db
 
 class MenuItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,14 +1,18 @@
 from flask import Flask, jsonify
-from backend.models.user import db
-from backend.models.menu_item import MenuItem
-from backend.models.order import Order
-from backend.controllers.auth_controller import login, register
-from backend.controllers.menu_item_controller import get_menu_items
-from backend.controllers.order_controller import create_order, get_orders
+
+from models.user import db
+from models.menu_item import MenuItem
+from models.order import Order
+
+from controllers.auth_controller import login, register
+from controllers.menu_item_controller import get_menu_items
+from controllers.order_controller import create_order, get_orders
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 with app.app_context():

@@ -1,5 +1,5 @@
 from flask import jsonify
-from backend.models.menu_item import MenuItem
+from models.menu_item import MenuItem
 
 def get_menu_items():
     menu_items = MenuItem.query.all()

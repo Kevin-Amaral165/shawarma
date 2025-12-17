@@ -1,16 +1,16 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const onFinish = (values: any) => {
         axios.post('/api/register', values)
             .then(response => {
                 message.success('Registration successful!');
-                history.push('/login');
+                navigate('/login');
             })
             .catch(error => {
                 console.error('Error registering:', error);

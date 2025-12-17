@@ -1,7 +1,7 @@
 from flask import jsonify, request
-from backend.models.order import Order, OrderItem
-from backend.models.user import db
-from backend.models.menu_item import MenuItem
+from models.order import Order, OrderItem
+from models.user import db
+from models.menu_item import MenuItem
 
 def create_order():
     data = request.get_json()

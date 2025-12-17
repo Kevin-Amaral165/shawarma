@@ -5,7 +5,7 @@ import NavBar from './components/NavBar';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import OrderPage from './pages/OrderPage';
-import AdminDashboard from './pages-AdminDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import { useAuth } from './context/AuthContext';
 
 const AppRoutes = () => {

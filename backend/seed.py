@@ -1,6 +1,6 @@
-from backend.app import app
-from backend.models.user import db, User
-from backend.models.menu_item import MenuItem
+from app import app
+from models.user import db, User
+from models.menu_item import MenuItem
 from werkzeug.security import generate_password_hash
 
 with app.app_context():
